@@ -1,0 +1,22 @@
+{
+  "name": "df.2.0-task-mgt-task-service",
+  "version": "1.0.0",
+  "description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
