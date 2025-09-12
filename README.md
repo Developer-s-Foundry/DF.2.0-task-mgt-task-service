@@ -28,5 +28,5 @@ This project was built as part of **Team C, Developers Foundry 2.0 Bootcamp**.
 ### Clone the repository
 
 ```bash
-git clone https://github.com/Developer-s-Foundry/DF.2.0-task-mgt-task-service.git
+ git clone https://github.com/Developer-s-Foundry/DF.2.0-task-mgt-task-service.git
 ```
