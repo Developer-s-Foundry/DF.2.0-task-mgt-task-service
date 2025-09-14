@@ -1,5 +1,8 @@
-import { Application } from 'express';
-import http from 'http';
+import 'reflect-metadata';
+
+import { Application, json, urlencoded } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
 const SERVER_PORT = 4000;
 
@@ -11,7 +14,26 @@ export class SetupServer {
   }
 
   public start(): void {
+    this.securityMiddleware(this.app);
+    this.standardMiddleware(this.app);
     this.startHttpServer(this.app);
+  }
+
+  private securityMiddleware(app: Application): void {
+    app.use(helmet());
+    app.use(
+      cors({
+        origin: '*',
+        credentials: true,
+        optionsSuccessStatus: 200,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      })
+    );
+  }
+
+  private standardMiddleware(app: Application): void {
+    app.use(json());
+    app.use(urlencoded({ extended: true }));
   }
 
   private async startHttpServer(app: Application): Promise<void> {
