@@ -22,11 +22,36 @@ This project was built as part of **Team C, Developers Foundry 2.0 Bootcamp**.
 ## Tech Stack
 
 - Node.js
+- Typescript
+- Postgres
 
 ## Getting Started
 
-### Clone the repository
+### 1. Clone the repository
 
 ```bash
- git clone https://github.com/Developer-s-Foundry/DF.2.0-task-mgt-task-service.git
+git clone https://github.com/Developer-s-Foundry/DF.2.0-task-mgt-task-service.git
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+```bash
+DB_NAME=dftaskManagement
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_HOST=localhost
+DB_PORT=5432
+PORT=4000
+```
+
+### 4. Start the development server
+
+```bash
+npm run dev
 ```
