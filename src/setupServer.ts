@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { Application, json, urlencoded } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import taskRoutes from './routes/task.routes';
 
 const SERVER_PORT = 4000;
 
@@ -16,6 +17,7 @@ export class SetupServer {
   public start(): void {
     this.securityMiddleware(this.app);
     this.standardMiddleware(this.app);
+    this.registerRoutes(this.app);
     this.startHttpServer(this.app);
   }
 
@@ -34,6 +36,10 @@ export class SetupServer {
   private standardMiddleware(app: Application): void {
     app.use(json());
     app.use(urlencoded({ extended: true }));
+  }
+
+  private registerRoutes(app: Application): void {
+    app.use('/api/tasks', taskRoutes);
   }
 
   private async startHttpServer(app: Application): Promise<void> {
