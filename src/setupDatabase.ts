@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { config } from './config/config';
 
-const setupDatabase = new DataSource({
+export const AppDataSource = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -15,7 +15,7 @@ const setupDatabase = new DataSource({
 
 export const databaseConnection = async () => {
   try {
-    await setupDatabase.initialize();
+    await AppDataSource.initialize();
     console.log('Data Source has been initialized!');
   } catch (error) {
     console.error('Error during Data Source initialization:', error);
