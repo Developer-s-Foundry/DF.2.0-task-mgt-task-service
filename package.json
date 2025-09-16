@@ -4,7 +4,9 @@
   "description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/migrations -d ./src/setupDatabase.ts",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/setupDatabase.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +27,7 @@
     "nodemon": "^3.1.10",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "swagger-ui": "^5.29.0",
+    "swagger-ui-express": "^5.0.1",
     "tsoa": "^6.6.0",
     "typeorm": "^0.3.26"
   }
