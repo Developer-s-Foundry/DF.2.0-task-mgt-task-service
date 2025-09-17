@@ -6,7 +6,6 @@ export enum TaskStatus {
   TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
   DONE = 'DONE',
-  BLOCKED = 'BLOCKED',
 }
 
 @Entity()
@@ -24,7 +23,7 @@ export class Task extends BaseEntity {
   })
   status: TaskStatus;
 
-  @ManyToOne(() => User, (user) => user.createdTasks, { eager: true })
+  @ManyToOne(() => User, (user) => user.createdTasks, { nullable: true, eager: true })
   createdBy: User;
 
   @ManyToOne(() => User, (user) => user.assignedTasks, { nullable: true, eager: true })
