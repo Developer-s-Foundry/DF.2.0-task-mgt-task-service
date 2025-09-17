@@ -1,0 +1,40 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "df.2.0-task-mgt-task-service",
+		"version": "1.0.0",
+		"description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/tasks": {
+			"post": {
+				"operationId": "CreateTask",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

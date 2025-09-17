@@ -1,3 +1,10 @@
-export class TaskControllers {}
+import { taskService, TaskService } from '../services/task.service';
+import { Controller, Get, Post, Route } from 'tsoa';
 
-export const taskController: TaskControllers = new TaskControllers();
+@Route('tasks')
+export class TaskController extends Controller {
+  @Post('/')
+  public async createTask() {
+    await taskService.createTask();
+  }
+}

@@ -4,9 +4,11 @@
   "description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/app.ts",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/migrations -d ./src/setupDatabase.ts",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/setupDatabase.ts"
+    "tsoa:update": "tsoa spec-and-routes",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/database/migrations -d ./src/setupDatabase.ts",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/setupDatabase.ts",
+    "dev": "npm run tsoa:update && nodemon src/app.ts",
+    "seeds:dev": "npx ts-node src/commons/seed/seeds.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,7 @@
   },
   "dependencies": {
     "class-validator": "^0.14.2",
+    "@faker-js/faker": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

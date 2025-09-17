@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { Task } from './task.entity';
+import { BaseEntity } from './BaseEntity';
 
 export enum UserRole {
   ADMIN = 'ADMIN',
@@ -7,10 +8,7 @@ export enum UserRole {
 }
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column()
   name: string;
 
@@ -29,10 +27,4 @@ export class User {
 
   @OneToMany(() => Task, (task) => task.createdBy)
   createdTasks: Task[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './user.entity';
+import { BaseEntity } from './BaseEntity';
 
 export enum TaskStatus {
   TODO = 'TODO',
@@ -9,10 +10,7 @@ export enum TaskStatus {
 }
 
 @Entity()
-export class Task {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Task extends BaseEntity {
   @Column()
   title: string;
 
@@ -34,10 +32,4 @@ export class Task {
 
   @Column({ type: 'timestamp', nullable: true })
   dueDate: Date;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }
