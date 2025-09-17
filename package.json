@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "tsoa:update": "tsoa spec-and-routes",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/database/migrations -d ./src/setupDatabase.ts",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/database/migrations/migration -d ./src/setupDatabase.ts",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/setupDatabase.ts",
     "dev": "npm run tsoa:update && nodemon src/app.ts",
-    "seeds:dev": "npx ts-node src/commons/seed/seeds.ts"
+    "seeds:dev": "npx ts-node src/database/seed/seeds.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +18,12 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.3.1",
     "@types/swagger-ui-express": "^4.1.8",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "class-validator": "^0.14.2",
     "@faker-js/faker": "^7.6.0",
+    "class-validator": "^0.14.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

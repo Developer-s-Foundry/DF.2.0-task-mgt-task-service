@@ -1,194 +1,179 @@
 {
-	"openapi": "3.0.0",
-	"components": {
-		"examples": {},
-		"headers": {},
-		"parameters": {},
-		"requestBodies": {},
-		"responses": {},
-		"schemas": {
-			"CreateTaskDto": {
-				"properties": {
-					"title": {
-						"type": "string",
-						"example": "Fix API bug"
-					},
-					"description": {
-						"type": "string",
-						"example": "Resolve the issue with user login flow"
-					},
-					"dueDate": {
-						"type": "string",
-						"example": "2025-09-20T15:30:00.000Z"
-					},
-					"assignedTo": {
-						"type": "string",
-						"example": "john.doe@example.com"
-					}
-				},
-				"required": [
-					"title"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"TaskResponseDto": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"title": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"dueDate": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string"
-					},
-					"createdBy": {
-						"type": "string"
-					},
-					"assignedTo": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"id",
-					"title",
-					"status",
-					"createdBy"
-				],
-				"type": "object",
-				"additionalProperties": false
-			}
-		},
-		"securitySchemes": {}
-	},
-	"info": {
-		"title": "df.2.0-task-mgt-task-service",
-		"version": "1.0.0",
-		"description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
-		"license": {
-			"name": "ISC"
-		},
-		"contact": {}
-	},
-	"paths": {
-		"/tasks": {
-			"post": {
-				"operationId": "CreateTask",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"successfully": {
-											"type": "boolean"
-										},
-										"data": {
-											"properties": {
-												"successfully": {
-													"type": "boolean"
-												},
-												"data": {},
-												"message": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"successfully",
-												"data",
-												"message"
-											],
-											"type": "object"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"successfully",
-										"data",
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateTaskDto"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetTasks",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TaskResponseDto"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/tasks/{taskId}": {
-			"get": {
-				"operationId": "GetTaskById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/TaskResponseDto"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "taskId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		}
-	},
-	"servers": [
-		{
-			"url": "/"
-		}
-	]
+  "openapi": "3.0.0",
+  "components": {
+    "examples": {},
+    "headers": {},
+    "parameters": {},
+    "requestBodies": {},
+    "responses": {},
+    "schemas": {
+      "CreateTaskDto": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Fix API bug"
+          },
+          "description": {
+            "type": "string",
+            "example": "Resolve the issue with user login flow"
+          },
+          "dueDate": {
+            "type": "string",
+            "example": "2025-09-20T15:30:00.000Z"
+          },
+          "assignedTo": {
+            "type": "string",
+            "example": "john.doe@example.com"
+          }
+        },
+        "required": ["title"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TaskResponseDto": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "assignedTo": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "title", "status", "createdBy"],
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "title": "df.2.0-task-mgt-task-service",
+    "version": "1.0.0",
+    "description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
+    "license": {
+      "name": "ISC"
+    },
+    "contact": {}
+  },
+  "paths": {
+    "/tasks": {
+      "post": {
+        "operationId": "CreateTask",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "successfully": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {},
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["successfully", "data", "message"],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["successfully", "data", "message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskDto"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetTasks",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TaskResponseDto"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/tasks/{taskId}": {
+      "get": {
+        "operationId": "GetTaskById",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
 }
