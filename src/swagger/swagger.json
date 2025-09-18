@@ -1,179 +1,410 @@
 {
-  "openapi": "3.0.0",
-  "components": {
-    "examples": {},
-    "headers": {},
-    "parameters": {},
-    "requestBodies": {},
-    "responses": {},
-    "schemas": {
-      "CreateTaskDto": {
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Fix API bug"
-          },
-          "description": {
-            "type": "string",
-            "example": "Resolve the issue with user login flow"
-          },
-          "dueDate": {
-            "type": "string",
-            "example": "2025-09-20T15:30:00.000Z"
-          },
-          "assignedTo": {
-            "type": "string",
-            "example": "john.doe@example.com"
-          }
-        },
-        "required": ["title"],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "TaskResponseDto": {
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "dueDate": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "assignedTo": {
-            "type": "string"
-          }
-        },
-        "required": ["id", "title", "status", "createdBy"],
-        "type": "object",
-        "additionalProperties": false
-      }
-    },
-    "securitySchemes": {}
-  },
-  "info": {
-    "title": "df.2.0-task-mgt-task-service",
-    "version": "1.0.0",
-    "description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
-    "license": {
-      "name": "ISC"
-    },
-    "contact": {}
-  },
-  "paths": {
-    "/tasks": {
-      "post": {
-        "operationId": "CreateTask",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "successfully": {
-                      "type": "boolean"
-                    },
-                    "data": {
-                      "properties": {
-                        "successfully": {
-                          "type": "boolean"
-                        },
-                        "data": {},
-                        "message": {
-                          "type": "string"
-                        }
-                      },
-                      "required": ["successfully", "data", "message"],
-                      "type": "object"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["successfully", "data", "message"],
-                  "type": "object"
-                }
-              }
-            }
-          }
-        },
-        "security": [],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTaskDto"
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "GetTasks",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/TaskResponseDto"
-                  },
-                  "type": "array"
-                }
-              }
-            }
-          }
-        },
-        "security": [],
-        "parameters": []
-      }
-    },
-    "/tasks/{taskId}": {
-      "get": {
-        "operationId": "GetTaskById",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "taskId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    }
-  },
-  "servers": [
-    {
-      "url": "/"
-    }
-  ]
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CreateTaskDto": {
+				"properties": {
+					"title": {
+						"type": "string",
+						"example": "Fix API bug"
+					},
+					"description": {
+						"type": "string",
+						"example": "Resolve the issue with user login flow"
+					},
+					"dueDate": {
+						"type": "string",
+						"example": "2025-09-20T15:30:00.000Z"
+					},
+					"assignedTo": {
+						"type": "string",
+						"example": "john.doe@example.com"
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskResponseDto": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"dueDate": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"assignedTo": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"status",
+					"createdBy"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskStatus": {
+				"enum": [
+					"TODO",
+					"IN_PROGRESS",
+					"DONE",
+					"BLOCKED"
+				],
+				"type": "string"
+			},
+			"UserRole": {
+				"enum": [
+					"ADMIN",
+					"USER"
+				],
+				"type": "string"
+			},
+			"Task": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deleted_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/TaskStatus"
+					},
+					"createdBy": {
+						"$ref": "#/components/schemas/User"
+					},
+					"assignedTo": {
+						"$ref": "#/components/schemas/User"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"created_at",
+					"title",
+					"description",
+					"status",
+					"createdBy",
+					"assignedTo",
+					"dueDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deleted_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"assignedTasks": {
+						"items": {
+							"$ref": "#/components/schemas/Task"
+						},
+						"type": "array"
+					},
+					"createdTasks": {
+						"items": {
+							"$ref": "#/components/schemas/Task"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"created_at",
+					"name",
+					"email",
+					"role",
+					"assignedTasks",
+					"createdTasks"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateTaskDto": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/TaskStatus"
+					},
+					"assignedToId": {
+						"type": "string"
+					},
+					"dueDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "df.2.0-task-mgt-task-service",
+		"version": "1.0.0",
+		"description": "A simple project management application with basic CRUD functionality.  \r You can create, read, update, and delete projects, tasks, and team members — making it easy to manage project workflows in one place.",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/tasks": {
+			"post": {
+				"operationId": "CreateTask",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"successfully": {
+											"type": "boolean"
+										},
+										"data": {
+											"properties": {
+												"successfully": {
+													"type": "boolean"
+												},
+												"data": {},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"successfully",
+												"data",
+												"message"
+											],
+											"type": "object"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"successfully",
+										"data",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateTaskDto"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetTasks",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TaskResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/tasks/{taskId}": {
+			"get": {
+				"operationId": "GetTaskById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/tasks/{id}": {
+			"put": {
+				"operationId": "UpdateTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Task"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateTaskDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteTask",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
 }
