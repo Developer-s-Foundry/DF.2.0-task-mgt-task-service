@@ -47,6 +47,7 @@ DB_USER=postgres
 DB_PASSWORD=yourpassword
 DB_HOST=localhost
 DB_PORT=5432
+DB_SSL_ENABLED=false
 PORT=4000
 ```
 
